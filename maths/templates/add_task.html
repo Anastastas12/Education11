@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить новую задачу</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input[type="text"],
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="display: inline-block; vertical-align: middle; margin-left: 10px;">Математические задачи</h1>
+    </header>
+    <div class="container">
+        <h2>Добавить новую задачу</h2>
+        <form action="{% url 'add_task' %}" method="post">
+            {% csrf_token %}
+            <label for="task_name">Название задачи:</label><br>
+            <input type="text" id="task_name" name="task_name" required><br><br>
+            <label for="description">Условие задачи:</label><br>
+            <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+            <!-- Изменено поле для ввода числа на текстовое поле с ограничением только на целые числа -->
+            <label for="correct_answer">Правильный ответ:</label><br>
+            <input type="text" id="correct_answer" name="correct_answer" pattern="[0-9]*" title="Введите только целое число" required><br><br>
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+</body>
+</html>

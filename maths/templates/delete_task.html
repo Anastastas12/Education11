@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Удаление задачи</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .confirm {
+            color: red;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-container button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .btn-container button:hover {
+            background-color: #45a049;
+        }
+
+        .btn-container a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background-color: #ddd;
+        }
+
+        .btn-container a:hover {
+            background-color: #aaa;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Удаление задачи</h1>
+    </header>
+    <div class="container">
+        <p class="confirm">Вы уверены, что хотите удалить задачу "{{ task.title }}"?</p>
+        <div class="btn-container">
+            <form action="{% url 'delete_task' task.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Удалить</button>
+            </form>
+            <a href="{% url 'index' %}">Отмена</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Банк задач</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 10px;
+            background-color: #ddd;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Выравнивание элементов по вертикали */
+        }
+
+        .delete-link {
+            color: red;
+            padding: 5px 10px;
+            border: 1px solid red;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .delete-link:hover {
+            background-color: #ffcccc;
+        }
+
+        /* Стили для кнопки "На главную" */
+        .back-container {
+            text-align: center; /* Центрирование содержимого */
+            margin-bottom: 20px; /* Дополнительный отступ снизу */
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #ddd;
+        }
+
+        .back-link:hover {
+            background-color: #aaa;
+            color: white;
+        }
+
+        /* Стили для рисунка */
+        .logo-container {
+            text-align: center; /* Центрирование содержимого */
+            margin-bottom: 20px; /* Дополнительный отступ снизу */
+        }
+
+        .logo {
+            width: 150px;
+            vertical-align: middle; /* Выравнивание по вертикали */
+            margin-right: 10px; /* Отступ справа */
+        }
+
+        /* Стили для заголовка */
+        h1 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 36px;
+            text-align: center;
+            margin-top: 10px;
+            display: inline-block; /* Добавлено для корректного отображения */
+            vertical-align: middle; /* Выравнивание по вертикали */
+        }
+
+        /* Стили для названия задачи */
+        .task-title {
+            font-weight: bold; /* Жирный шрифт */
+            flex: 1; /* Растягивание элемента, чтобы он занимал всё доступное пространство */
+            margin-right: 10px; /* Уменьшение отступа между названием и условием задачи */
+        }
+
+        /* Стили для описания задачи */
+        .task-description {
+            flex: 3; /* Растягивание элемента, чтобы он занимал 3/4 доступного пространства */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{% static 'matematika.png' %}" alt="Математика" class="logo"> <!-- Добавлен класс "logo" -->
+        </div>
+        <h1>Математические задачи</h1>
+    </header>
+    <div class="container">
+        <div class="back-container">
+            <a class="back-link" href="{% url 'index' %}">На главную</a> <!-- Кнопка для перехода на главную страницу -->
+        </div>
+        <h2>Банк задач</h2>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <span class="task-title">{{ task.title }}</span>
+                    <span class="task-description">{{ task.description }}</span>
+                    <a class="delete-link" href="/task/{{ task.id }}/delete/">Удалить</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

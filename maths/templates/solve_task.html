@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Решение задачи</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        form input[type="text"],
+        form input[type="number"] {
+            width: calc(100% - 22px); /* Установка ширины полей в форме */
+            padding: 10px;
+            margin-bottom: 15px; /* Увеличение расстояния между полями */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form textarea {
+            width: calc(100% - 22px); /* Установка ширины текстового поля в форме */
+            padding: 10px;
+            margin-bottom: 15px; /* Увеличение расстояния между полями */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid;
+            width: 60%; /* Установка ширины модального окна */
+            max-width: 500px; /* Максимальная ширина модального окна */
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Подсветка красным цветом */
+        .modal-content.wrong-answer {
+            background-color: #ffcccc; /* Красный цвет фона */
+        }
+
+        /* Подсветка зеленым цветом */
+        .modal-content.correct-answer {
+            background-color: #ccffcc; /* Зеленый цвет фона */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Убираем стрелочки в полях ввода */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        /* Стили для надписи перед полем ввода ответа */
+        .answer-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        /* Дополнительный стиль для перемещенного элемента */
+        .answer-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            margin-left: 20px; /* Отступ слева */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Решение задачи</h1>
+    </header>
+    <div class="container">
+        <h2>{{ task.title }}</h2>
+        <p>{{ task.description }}</p>
+        <form id="answerForm" action="/check_answer/{{ task.id }}/" method="post">
+            {% csrf_token %}
+            <label for="answer">Ответ:</label><br> <!-- Поменяли местами слово "Ответ:" и фразу "укажите ответ с точностью до целых" -->
+            <label class="answer-label" for="answer">Укажите ответ с точностью до целых</label><br>
+            <input type="number" id="answer" name="answer" required><br><br>
+            <button type="button" onclick="checkAnswer()">Проверить</button>
+        </form>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="myModal" class="modal">
+        <div id="modalContent" class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modalText"></p>
+        </div>
+    </div>
+
+    <script>
+        // Функция для проверки ответа и отображения модального окна
+        function checkAnswer() {
+            var userInput = document.getElementById("answer").value;
+            var correctAnswer = "{{ task.correct_answer }}"; // Замените на правильный ответ из контекста
+            var modalContent = document.getElementById("modalContent");
+
+            if (parseInt(userInput) === parseInt(correctAnswer)) {
+                document.getElementById("modalText").innerHTML = "Правильный ответ!";
+                modalContent.classList.add("correct-answer"); // Добавляем класс для правильного ответа
+                modalContent.classList.remove("wrong-answer"); // Удаляем класс для неправильного ответа
+            } else {
+                document.getElementById("modalText").innerHTML = "Ответ неверный!";
+                modalContent.classList.add("wrong-answer"); // Добавляем класс для неправильного ответа
+                modalContent.classList.remove("correct-answer"); // Удаляем класс для правильного ответа
+            }
+
+            // Показываем модальное окно
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        // Функция для закрытия модального окна
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>
+

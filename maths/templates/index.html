@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Математические задачи</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background-color: #ddd;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background-color: #aaa;
+            color: white;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+            position: relative; /* Добавляем позиционирование для контейнера */
+        }
+
+        table {
+            width: calc(70% - 10px); /* Уменьшаем ширину таблицы для учета картинки и отступа */
+            float: left; /* Добавляем плавающее позиционирование таблицы */
+            border-collapse: collapse;
+            margin-right: 10px; /* Добавляем отступ справа */
+        }
+
+        th, td {
+            padding: 8px; /* Уменьшение отступов внутри ячеек */
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .solve-button {
+            text-decoration: none;
+            color: #333;
+            padding: 6px 12px; /* Уменьшение размеров кнопок */
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            background-color: #ddd;
+            transition: background-color 0.3s;
+        }
+
+        .solve-button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        h1 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 36px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .action-link {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background-color: #ddd;
+            display: inline-block;
+        }
+
+        .action-link:hover {
+            background-color: #aaa;
+            color: white;
+        }
+
+        /* Стили для изображения */
+        .image {
+            position: absolute; /* Абсолютное позиционирование изображения */
+            top: 0;
+            right: 0;
+            width: calc(30% - 10px); /* Устанавливаем ширину изображения */
+            margin-top: 40px; /* Выравниваем по вертикали с таблицей */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'matematika.png' %}" alt="Математика" style="width: 150px;">
+        <h1>Математические задачи</h1>
+    </header>
+    <nav>
+        <a href="{% url 'add_task' %}" class="action-link">Добавить новую задачу</a>
+        <a href="{% url 'view_tasks' %}" class="action-link">Банк задач</a>
+    </nav>
+    <div class="container">
+        <h2>Все задачи</h2>
+        <table>
+            {% for task in tasks %}
+                <tr>
+                    <td><strong>{{ task.title }}</strong></td>
+                    <td><a href="{% url 'solve_task' task.id %}" class="solve-button">Решить</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <!-- Добавляем изображение -->
+        <img src="{% static 'cit.jpg' %}" alt="CIT" class="image">
+    </div>
+</body>
+</html>
